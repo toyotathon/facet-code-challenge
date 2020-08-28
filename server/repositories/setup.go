@@ -25,11 +25,7 @@ func ConnectDatabase() {
 	}
 
 	database.AutoMigrate(&models.User{})
-	database.AutoMigrate(&models.Customer{})
-	database.AutoMigrate(&models.Merchant{})
-	database.AutoMigrate(&models.Item{})
-	database.AutoMigrate(&models.Purchase{})
-	database.AutoMigrate(&models.SalesData{})
+	database.AutoMigrate(&models.Form{})
 
 	DB = database
 }

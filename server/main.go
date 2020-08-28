@@ -21,11 +21,8 @@ func main() {
 	dashboardController := controllers.DashboardController{}
 	dashboardController.Init(repositories.DB)
 
-	dataController := controllers.DataController{}
-	dataController.Init(repositories.DB)
-
-	uploadController := controllers.UploadController{}
-	uploadController.Init(repositories.DB)
+	formController := controllers.FormController{}
+	formController.Init(repositories.DB)
 
 	userController := controllers.UserController{}
 	userController.Init(repositories.DB)
@@ -38,11 +35,8 @@ func main() {
 	// DashboardController endpoints
 	api.GET("/dashboard", authMiddleware.MiddlewareFunc(), dashboardController.GetDashboardData)
 
-	// DataController endpoints
-	api.GET("/data", authMiddleware.MiddlewareFunc(), dataController.GetAllUploadedData)
-
-	// UploadController endpoints
-	api.POST("/upload", authMiddleware.MiddlewareFunc(), uploadController.UploadForm)
+	// FormController endpoints
+	api.POST("/form", authMiddleware.MiddlewareFunc(), formController.UploadForm)
 
 	// UserController endpoints
 	api.POST("/user", userController.CreateNewUser)
