@@ -1,4 +1,3 @@
-
 export class FormatUtils {
   private static usdFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
