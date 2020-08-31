@@ -1,6 +1,7 @@
 import React, { FC, useState, useCallback, useContext, useEffect } from "react";
-import { Form } from "../types";
+import { Form, CreateFormRequest } from "../types";
 import { DashboardRequests } from "../requests/DashboardRequests";
+import { FormRequests } from "../requests/FormRequests";
 
 interface ApiContextStore {
   formData: Form[];
@@ -18,11 +19,30 @@ const initialApiState = {
 
 export const ApiContext = React.createContext({
   store: initialApiState,
-  updateDashboardData: () => {},
+  setStoreState: (store: ApiContextStore) => {},
 });
 
 export const ApiProvider: FC = ({ children }) => {
   const [apiState, setApiState] = useState<ApiContextStore>(initialApiState);
+
+  useEffect(() => {
+    DashboardRequests.getDashboardData().then(
+      ({ formData, netWorth, totalLiabilities, totalAssets }) =>
+        setApiState({ formData, netWorth, totalLiabilities, totalAssets })
+    );
+  }, []);
+
+  return (
+    <ApiContext.Provider
+      value={{ store: apiState, setStoreState: setApiState }}
+    >
+      {children}
+    </ApiContext.Provider>
+  );
+};
+
+export const useApiContext = () => {
+  const { store, setStoreState } = useContext(ApiContext);
 
   const updateDashboardData = useCallback(async () => {
     const {
@@ -31,24 +51,20 @@ export const ApiProvider: FC = ({ children }) => {
       totalLiabilities,
       totalAssets,
     } = await DashboardRequests.getDashboardData();
-    setApiState({ formData, netWorth, totalLiabilities, totalAssets });
-  }, []);
+    setStoreState({ formData, netWorth, totalLiabilities, totalAssets });
+  }, [setStoreState]);
 
-  useEffect(() => {
-    updateDashboardData();
-  }, [updateDashboardData]);
-
-  return (
-    <ApiContext.Provider value={{ store: apiState, updateDashboardData }}>
-      {children}
-    </ApiContext.Provider>
+  const createForm = useCallback(
+    async (form: CreateFormRequest) => {
+      await FormRequests.createForm(form);
+      await updateDashboardData();
+    },
+    [updateDashboardData]
   );
-};
 
-export const useApiContext = () => {
-  const { store, updateDashboardData } = useContext(ApiContext);
   return {
     store,
     updateDashboardData,
+    createForm,
   };
 };
