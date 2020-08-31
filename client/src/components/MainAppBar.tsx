@@ -7,9 +7,6 @@ const MainAppBar: FC = () => (
   <MainBar position="static">
     <AppToolbar>
       <Typography variant="h6"> Asset / Liability Tracker</Typography>
-      <IconButton color="primary">
-        <LogoutIcon color="action" />
-      </IconButton>
     </AppToolbar>
   </MainBar>
 );
@@ -18,10 +15,6 @@ export default MainAppBar;
 
 const AppToolbar = styled(Toolbar)`
   justify-content: space-between;
-`;
-
-const LogoutIcon = styled(ExitToAppIcon)`
-  color: #fff;
 `;
 
 const MainBar = styled(AppBar)`
