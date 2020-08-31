@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	"github.com/toyotathon/megaphone-sales-admin/controllers"
-	"github.com/toyotathon/megaphone-sales-admin/repositories"
+	"github.com/toyotathon/facet-code-challenge/controllers"
+	"github.com/toyotathon/facet-code-challenge/repositories"
 )
 
 func main() {
@@ -32,11 +32,13 @@ func main() {
 	auth.GET("/logout", authMiddleware.LogoutHandler)
 	auth.GET("/refresh-token", authMiddleware.RefreshHandler)
 
+	// TODO: readd auth middleware once it is fully implemented
 	// DashboardController endpoints
-	api.GET("/dashboard", authMiddleware.MiddlewareFunc(), dashboardController.GetDashboardData)
+	api.GET("/dashboard", dashboardController.GetDashboardData)
 
 	// FormController endpoints
-	api.POST("/form", authMiddleware.MiddlewareFunc(), formController.UploadForm)
+	api.POST("/form", formController.CreateForm)
+	api.DELETE("/form", formController.DeleteForms)
 
 	// UserController endpoints
 	api.POST("/user", userController.CreateNewUser)

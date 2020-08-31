@@ -2,9 +2,8 @@ package models
 
 // GetDashboardDataResponse struct
 type GetDashboardDataResponse struct {
-	TotalRevenue     float64 `json:"totalRevenue"`
-	CustomerCount    int     `json:"customerCount"`
 	NetWorth         float64 `json:"netWorth"`
-	AssetsTotal      int     `json:"assetsTotal"`
-	LiabilitiesTotal int     `json:"liabilitiesTotal"`
+	TotalAssets      float64 `json:"assetsTotal"`
+	TotalLiabilities float64 `json:"liabilitiesTotal"`
+	FormData         []Form  `json:"formData"`
 }

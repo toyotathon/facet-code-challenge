@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/toyotathon/megaphone-sales-admin/models"
+	"github.com/toyotathon/facet-code-challenge/models"
 
 	"github.com/jinzhu/gorm"
 	// GORM Postgres Dialect

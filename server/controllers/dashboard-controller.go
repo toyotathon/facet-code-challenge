@@ -3,11 +3,13 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/toyotathon/megaphone-sales-admin/models"
+	"github.com/toyotathon/facet-code-challenge/utils"
+
+	"github.com/toyotathon/facet-code-challenge/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/toyotathon/megaphone-sales-admin/repositories"
+	"github.com/toyotathon/facet-code-challenge/repositories"
 )
 
 // DashboardController struct
@@ -23,9 +25,29 @@ func (r *DashboardController) Init(db *gorm.DB) {
 
 // GetDashboardData method
 func (r *DashboardController) GetDashboardData(ctx *gin.Context) {
-	// TODO
-	// totalRevenue := r.purchaseRepository.GetTotalRevenue()
-	// customerCount := r.customerRepository.GetAllCustomers()
+	forms, err := r.formRepository.GetAllForms()
 
-	ctx.JSON(http.StatusOK, models.GetDashboardDataResponse{})
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+		return
+	}
+
+	var netWorth, totalAssets, totalLiabilities int64 = 0, 0, 0
+	for _, form := range forms {
+		switch formType := form.FormType; formType {
+		case models.Asset:
+			totalAssets += form.Balance
+			netWorth += form.Balance
+		case models.Liability:
+			totalLiabilities += form.Balance
+			netWorth -= form.Balance
+		}
+	}
+
+	ctx.JSON(http.StatusOK, models.GetDashboardDataResponse{
+		NetWorth:         utils.ConvertToUSDFloat(netWorth),
+		TotalAssets:      utils.ConvertToUSDFloat(totalAssets),
+		TotalLiabilities: utils.ConvertToUSDFloat(totalLiabilities),
+		FormData:         forms,
+	})
 }

@@ -16,3 +16,15 @@ type Form struct {
 	Name     string   `json:"name"`
 	Balance  int64    `json:"balance"`
 }
+
+// CreateFormRequest struct
+type CreateFormRequest struct {
+	FormType FormType `json:"formType"`
+	Name     string   `json:"name"`
+	Balance  int64    `json:"balance"`
+}
+
+// DeleteFormRequest struct
+type DeleteFormRequest struct {
+	FormIds []int `json:"formIds"`
+}

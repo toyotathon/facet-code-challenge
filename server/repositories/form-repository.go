@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/toyotathon/megaphone-sales-admin/models"
+	"github.com/toyotathon/facet-code-challenge/models"
 )
 
 // FormRepository struct
@@ -16,6 +16,33 @@ func (r *FormRepository) Init(db *gorm.DB) {
 }
 
 // CreateForm method
-func (r *FormRepository) CreateForm(item models.Form) {
+func (r *FormRepository) CreateForm(formType models.FormType, name string, balance int64) error {
+	form := models.Form{
+		FormType: formType,
+		Name:     name,
+		Balance:  balance,
+	}
 
+	if err := r.db.Create(&form).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// GetAllForms method
+func (r *FormRepository) GetAllForms() ([]models.Form, error) {
+	var forms []models.Form
+	if err := r.db.Find(&forms).Error; err != nil {
+		return nil, err
+	}
+	return forms, nil
+}
+
+// DeleteForms method
+func (r *FormRepository) DeleteForms(ids []int) error {
+	if err := r.db.Delete(&models.Form{}, ids).Error; err != nil {
+		return err
+	}
+	return nil
 }

@@ -1,4 +1,4 @@
-module github.com/toyotathon/megaphone-sales-admin
+module github.com/toyotathon/facet-code-challenge
 
 go 1.14
 

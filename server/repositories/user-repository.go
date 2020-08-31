@@ -2,8 +2,8 @@ package repositories
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/toyotathon/megaphone-sales-admin/models"
-	"github.com/toyotathon/megaphone-sales-admin/utils"
+	"github.com/toyotathon/facet-code-challenge/models"
+	"github.com/toyotathon/facet-code-challenge/utils"
 )
 
 // UserRepository struct

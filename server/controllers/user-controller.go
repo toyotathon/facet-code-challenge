@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/toyotathon/megaphone-sales-admin/models"
-	"github.com/toyotathon/megaphone-sales-admin/repositories"
+	"github.com/toyotathon/facet-code-challenge/models"
+	"github.com/toyotathon/facet-code-challenge/repositories"
 )
 
 // UserController struct

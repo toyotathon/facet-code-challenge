@@ -3,13 +3,13 @@ package controllers
 import (
 	"time"
 
-	"github.com/toyotathon/megaphone-sales-admin/utils"
+	"github.com/toyotathon/facet-code-challenge/utils"
 
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/toyotathon/megaphone-sales-admin/models"
-	"github.com/toyotathon/megaphone-sales-admin/repositories"
+	"github.com/toyotathon/facet-code-challenge/models"
+	"github.com/toyotathon/facet-code-challenge/repositories"
 )
 
 // AuthController struct
