@@ -33,6 +33,7 @@ func (r *DashboardController) GetDashboardData(ctx *gin.Context) {
 	}
 
 	var netWorth, totalAssets, totalLiabilities int64 = 0, 0, 0
+	formData := []models.FormData{}
 	for _, form := range forms {
 		switch formType := form.FormType; formType {
 		case models.Asset:
@@ -42,12 +43,19 @@ func (r *DashboardController) GetDashboardData(ctx *gin.Context) {
 			totalLiabilities += form.Balance
 			netWorth -= form.Balance
 		}
+
+		formData = append(formData, models.FormData{
+			ID:       form.ID,
+			Balance:  utils.ConvertToUSDFloat(form.Balance),
+			Name:     form.Name,
+			FormType: form.FormType,
+		})
 	}
 
 	ctx.JSON(http.StatusOK, models.GetDashboardDataResponse{
 		NetWorth:         utils.ConvertToUSDFloat(netWorth),
 		TotalAssets:      utils.ConvertToUSDFloat(totalAssets),
 		TotalLiabilities: utils.ConvertToUSDFloat(totalLiabilities),
-		FormData:         forms,
+		FormData:         formData,
 	})
 }

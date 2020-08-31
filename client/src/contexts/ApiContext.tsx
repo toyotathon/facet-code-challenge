@@ -62,9 +62,18 @@ export const useApiContext = () => {
     [updateDashboardData]
   );
 
+  const deleteForms = useCallback(
+    async (formIds: number[]) => {
+      await FormRequests.deleteForms({ formIds });
+      await updateDashboardData();
+    },
+    [updateDashboardData]
+  );
+
   return {
     store,
     updateDashboardData,
     createForm,
+    deleteForms,
   };
 };

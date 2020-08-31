@@ -16,6 +16,10 @@ export interface CreateFormRequest {
   balance: number;
 }
 
+export interface DeleteFormsRequest {
+  formIds: number[];
+}
+
 export interface GetDashboardDataResponse {
   netWorth: number;
   totalAssets: number;

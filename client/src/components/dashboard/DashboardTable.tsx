@@ -9,10 +9,15 @@ import {
   TableBody,
   Checkbox,
   Typography,
+  Toolbar,
+  Tooltip,
+  IconButton,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { FormType, Form } from "../../types";
 import { FormatUtils } from "../../utils/format-utils";
+import styled from "styled-components";
+import { useApiContext } from "../../contexts/ApiContext";
 
 interface DashboardTableRowProps {
   type: FormType;
@@ -53,7 +58,9 @@ const DashboardTableRow: FC<DashboardTableRowProps> = ({
 );
 
 const DashboardTable: FC<{ rows: Form[] }> = ({ rows }) => {
+  const { deleteForms } = useApiContext();
   const [selected, setSelected] = useState<number[]>([]);
+
   const onSelect = useCallback(
     (id: number) => {
       if (selected.includes(id)) {
@@ -67,9 +74,18 @@ const DashboardTable: FC<{ rows: Form[] }> = ({ rows }) => {
     [selected]
   );
 
+  const onDeleteForms = useCallback(async () => {
+    await deleteForms(selected);
+    setSelected([]);
+  }, [selected]);
+
+  const numSelected = selected.length;
+
   return (
     <TableContainer component={Grid} item xs={12} sm={6}>
-      <Typography>Form Data</Typography>
+      <Typography variant="h6" component="div">
+        Form Data
+      </Typography>
       <Table>
         <DashboardTableHead />
         <TableBody>
@@ -85,7 +101,29 @@ const DashboardTable: FC<{ rows: Form[] }> = ({ rows }) => {
           ))}
         </TableBody>
       </Table>
+      {numSelected > 0 && (
+        <DashboardToolbar>
+          <Typography color="inherit" variant="subtitle1" component="div">
+            {numSelected} selected
+          </Typography>
+          <Tooltip title="Delete">
+            <IconButton
+              onClick={onDeleteForms}
+              color="inherit"
+              aria-label="delete"
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </DashboardToolbar>
+      )}
     </TableContainer>
   );
 };
 export default DashboardTable;
+
+const DashboardToolbar = styled(Toolbar)`
+  justify-content: space-between;
+  color: #fff;
+  background-color: rgb(170, 100, 123);
+`;
