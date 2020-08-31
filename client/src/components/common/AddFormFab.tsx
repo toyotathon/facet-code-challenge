@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import AddForm from "./AddForm";
 
 const AddFormFab: FC = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleOpen = useCallback(() => setOpen(true), []);
   const handleClose = useCallback(() => setOpen(false), []);
 
