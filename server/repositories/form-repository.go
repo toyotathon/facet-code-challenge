@@ -3,6 +3,7 @@ package repositories
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/toyotathon/facet-code-challenge/models"
+	"github.com/toyotathon/facet-code-challenge/utils"
 )
 
 // FormRepository struct
@@ -16,11 +17,11 @@ func (r *FormRepository) Init(db *gorm.DB) {
 }
 
 // CreateForm method
-func (r *FormRepository) CreateForm(formType models.FormType, name string, balance int64) error {
+func (r *FormRepository) CreateForm(formType models.FormType, name string, balance float64) error {
 	form := models.Form{
 		FormType: formType,
 		Name:     name,
-		Balance:  balance,
+		Balance:  utils.ConvertToUSDInt(balance),
 	}
 
 	if err := r.db.Create(&form).Error; err != nil {

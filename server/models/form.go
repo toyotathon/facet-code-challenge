@@ -21,7 +21,7 @@ type Form struct {
 type CreateFormRequest struct {
 	FormType FormType `json:"formType"`
 	Name     string   `json:"name"`
-	Balance  int64    `json:"balance"`
+	Balance  float64  `json:"balance"`
 }
 
 // DeleteFormRequest struct

@@ -1,30 +1,20 @@
 import React, { FC } from "react";
-import styled from "styled-components";
-import { Box, Fab } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+import { Box } from "@material-ui/core";
 import MainAppBar from "./components/MainAppBar";
 import DashboardPage from "./pages/DashboardPage";
+import { ApiProvider } from "./contexts/ApiContext";
+import AddFormFab from "./components/common/AddFormFab";
 
 const App: FC = () => {
   return (
-    <Box>
-      <MainAppBar />
-      <PageBox>
+    <ApiProvider>
+      <Box>
+        <MainAppBar />
         <DashboardPage />
-        <AddFab color="primary" aria-label="add">
-          <AddIcon />
-        </AddFab>
-      </PageBox>
-    </Box>
+      </Box>
+      <AddFormFab />
+    </ApiProvider>
   );
 };
 
 export default App;
-
-const PageBox = styled(Box)`
-  height: 100vh;
-`;
-
-const AddFab = styled(Fab)`
-  position: sticky;
-`;

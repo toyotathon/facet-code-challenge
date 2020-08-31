@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import styled from "styled-components";
 import {
   TableContainer,
   Grid,
@@ -9,11 +8,11 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
-import { EntryType } from "../../types";
+import { FormType, Form } from "../../types";
 import { FormatUtils } from "../../utils/format-utils";
 
 interface DashboardTableRowProps {
-  type: EntryType;
+  type: FormType;
   name: string;
   balance: number;
 }
@@ -40,20 +39,21 @@ const DashboardTableRow: FC<DashboardTableRowProps> = ({
   </TableRow>
 );
 
-const DashboardTable: FC<{ rows: DashboardTableRowProps[] }> = ({ rows }) => (
-  <TableContainer component={BaseGrid} item xs={12} sm={6}>
+const DashboardTable: FC<{ rows: Form[] }> = ({ rows }) => (
+  <TableContainer component={Grid} item xs={12} sm={6}>
     <Table>
       <DashboardTableHead />
       <TableBody>
-        {rows.map((row, index) => (
-          <DashboardTableRow key={index} {...row} />
+        {rows.map(({ formType, name, balance, id }) => (
+          <DashboardTableRow
+            key={id}
+            type={formType}
+            name={name}
+            balance={balance}
+          />
         ))}
       </TableBody>
     </Table>
   </TableContainer>
 );
 export default DashboardTable;
-
-const BaseGrid = styled(Grid)`
-  padding: 16px;
-`;
