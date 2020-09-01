@@ -47,7 +47,6 @@ const AddForm: FC<{ onClose: () => void }> = ({ onClose }) => {
     },
     [onClose, createForm, balance, formType, name]
   );
-  console.log(balance);
 
   return (
     <FormPaper elevation={0}>
