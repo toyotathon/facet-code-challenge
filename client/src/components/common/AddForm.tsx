@@ -18,7 +18,7 @@ const AddForm: FC<{ onClose: () => void }> = ({ onClose }) => {
   const { createForm } = useApiContext();
   const [formType, setFormType] = useState<FormType | null>(null);
   const [name, setName] = useState<string>("");
-  const [balance, setBalance] = useState<number>();
+  const [balance, setBalance] = useState<number | string>("");
 
   const handleFormTypeChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -34,19 +34,20 @@ const AddForm: FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const handleBalanceChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) =>
-      setBalance(Number.parseInt(event.target.value, 10)),
+      setBalance(Number.parseFloat(event.target.value) || ""),
     []
   );
   const handleFormSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (formType != null && balance != null && name !== "") {
-        await createForm({ formType, name, balance });
+      if (formType != null && balance !== "" && balance > 0 && name !== "") {
+        await createForm({ formType, name, balance: balance as number });
       }
       onClose();
     },
     [onClose, createForm, balance, formType, name]
   );
+  console.log(balance);
 
   return (
     <FormPaper elevation={0}>
