@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 const MainAppBar: FC = () => (
   <MainBar position="static">

@@ -77,7 +77,7 @@ const DashboardTable: FC<{ rows: Form[] }> = ({ rows }) => {
   const onDeleteForms = useCallback(async () => {
     await deleteForms(selected);
     setSelected([]);
-  }, [selected]);
+  }, [selected, deleteForms]);
 
   const numSelected = selected.length;
 

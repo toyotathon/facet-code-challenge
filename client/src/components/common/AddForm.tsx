@@ -1,6 +1,5 @@
 import React, { FC, useState, useCallback } from "react";
-import { useApiContext } from "../../contexts/ApiContext";
-import { FormType } from "../../types";
+import { FormType, CreateFormRequest } from "../../types";
 import {
   Typography,
   FormControl,
@@ -14,8 +13,10 @@ import {
 } from "@material-ui/core";
 import styled from "styled-components";
 
-const AddForm: FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { createForm } = useApiContext();
+const AddForm: FC<{
+  onClose: () => void;
+  createForm: (form: CreateFormRequest) => Promise<void>;
+}> = ({ onClose, createForm }) => {
   const [formType, setFormType] = useState<FormType | null>(null);
   const [name, setName] = useState<string>("");
   const [balance, setBalance] = useState<number | string>("");
