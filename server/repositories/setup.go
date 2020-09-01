@@ -24,7 +24,6 @@ func ConnectDatabase() {
 		panic("Failed to connect to database.")
 	}
 
-	database.AutoMigrate(&models.User{})
 	database.AutoMigrate(&models.Form{})
 
 	DB = database
